@@ -47,7 +47,6 @@ public class RecoupView extends JDialog {
       RecoupView dialog = new RecoupView(Tables.CX743);
       dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
       dialog.setVisible(true);
-      dialog.initLoad();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -58,7 +57,6 @@ public class RecoupView extends JDialog {
       RecoupView dialog = new RecoupView(tName);
       dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
       dialog.setVisible(true);
-      dialog.initLoad();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -150,6 +148,16 @@ public class RecoupView extends JDialog {
     panel.add(txtPanel, BorderLayout.CENTER);
     panel.add(buttPanel, BorderLayout.SOUTH);
     contentPanel.add(panel, BorderLayout.CENTER);
+    
+    if(tableName.equals(Tables.CX743)) {
+      List<String> pullList = RecoupTools.getPull(tableName);
+      List<String> strokeList = RecoupTools.getStroke(tableName);
+      for(int i = 0; i < 9; i++) {
+        recField[i].setText(pullList.get(i));
+        //System.out.println(pullList.get(i));
+        recField[i + 9].setText(strokeList.get(i));
+      }
+    }
     
     this.pack();
     RefineryUtilities.centerFrameOnScreen(this);

@@ -23,6 +23,9 @@ public class MethodTest {
     System.out.println(Collections.max(list));
     list.clear();
     System.out.println(list.toString());
+    list.add(896);
+    System.out.println(list.toString());
+    System.out.println(Collections.max(list));
     
     int a = 0;
     a++;
