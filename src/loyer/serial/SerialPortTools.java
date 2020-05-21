@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TooManyListenersException;
 
@@ -81,6 +82,20 @@ public class SerialPortTools {
       data = new SerialPortData(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
     }
     return data;
+  }
+  /**
+   * 获取串口名
+   * @return
+   * @throws SQLException
+   */
+  public static List<String> getPortName() throws SQLException {
+    List<String> list = new ArrayList<>();
+    String sql = "select portname from serialports";
+    ResultSet rs = DBHelper.search(sql, null);
+    while(rs.next()) {
+      list.add(rs.getString(1));
+    }
+    return list;
   }
 
   /**

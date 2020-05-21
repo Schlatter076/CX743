@@ -606,7 +606,7 @@ public class UsartView extends JDialog {
    * @param data
    */
   public void debugDataArrivals(byte[] data) {
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < data.length; i++) {
       if (isEquals(data[i], "f3") && isEquals(data[i + 1], "f4") && isEquals(data[i + 15], "0a")) {
         if (isEquals(data[i + 14], "20")) {
           StringBuilder xsb = new StringBuilder();
