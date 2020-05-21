@@ -115,6 +115,12 @@ public class DataView extends LoyerFrame {
   private boolean posiHasModify = false;
   private Random rd = new Random();
   
+<<<<<<< HEAD
+=======
+  private int timeout = 0;
+  private int timeout_2 = 0;
+
+>>>>>>> 92e0dc55d8e6327ddf2f99b92ff8a058c1f0eee3
   static {
     // 加载用户数据
     admin = UserTools.getUserByID(1);
@@ -514,7 +520,11 @@ public class DataView extends LoyerFrame {
   public void allPass() {
     if (isFinished) {
 
+<<<<<<< HEAD
       for (int i = 0; i < table.getRowCount() - 1; i++) {
+=======
+      for (int i = 1; i < table.getRowCount() - 1; i++) {
+>>>>>>> 92e0dc55d8e6327ddf2f99b92ff8a058c1f0eee3
         if (!table.getValueAt(i, 7).equals("PASS")) {
           setResultNG();
           return;
@@ -1201,6 +1211,7 @@ public class DataView extends LoyerFrame {
         isStart = false;
       }
       
+<<<<<<< HEAD
 //      if(allowPullRecord) {
 //        
 //        if(stepCounter >= 5) {
@@ -1218,6 +1229,25 @@ public class DataView extends LoyerFrame {
 //        timeout = 0;
 //        timeout_2 = 0;
 //      }
+=======
+      if(allowPullRecord) {
+        
+        if(stepCounter >= 5) {
+          if(timeout_2 > 500) {
+            timeout_2 = 0;
+            System.out.println("超时");
+            table.setValueAt("fail", stepCounter * 3 + 1, 5);
+            table.setValueAt("NG", stepCounter * 3 + 1, 7);
+            record(stepCounter * 3 + 1,  "导通");
+            setResultNG();
+          }
+          timeout_2++;
+        }
+      } else {
+        timeout = 0;
+        timeout_2 = 0;
+      }
+>>>>>>> 92e0dc55d8e6327ddf2f99b92ff8a058c1f0eee3
       
       // =======================================================
       if (allowStep[stepCounter] && stepCounter != lastStep) {
@@ -1259,6 +1289,10 @@ public class DataView extends LoyerFrame {
           //System.out.println((stepCounter * 3 + 2) + "::" + processPullVal(pullList2));
           double pullValue = processPullVal(pullList2);
           
+<<<<<<< HEAD
+=======
+          /*
+>>>>>>> 92e0dc55d8e6327ddf2f99b92ff8a058c1f0eee3
           if(pullValue > 7.6d) {
             pullValue = 7.6 + rd.nextDouble();
           }//*/
@@ -1351,6 +1385,7 @@ public class DataView extends LoyerFrame {
           com1HasData = false;
         } else if (isEquals(com1Bytes[14], "11")) { // 下位机开始
           if (scanField.getText().length() > 5) {
+<<<<<<< HEAD
             SerialPortTools.writeBytes(COM1, Commands.START);
             com1HasData = false;
             isStart = true;
@@ -1371,6 +1406,26 @@ public class DataView extends LoyerFrame {
 //              com1HasData = false;
 //              isStart = true;
 //            }
+=======
+            
+            if (ProductNumTools.isTested(tableName, scanField.getText())) {
+              int temp = JOptionPane.showConfirmDialog(null, "该产品已测试通过，点击'是(Y)'取消测试", "", JOptionPane.YES_NO_OPTION,
+                  JOptionPane.INFORMATION_MESSAGE);
+              if (temp == JOptionPane.YES_OPTION) {
+                SerialPortTools.writeBytes(COM1, Commands.RESTART);
+                com1HasData = false;
+                isStart = false;
+              } else {
+                SerialPortTools.writeBytes(COM1, Commands.START);
+                com1HasData = false;
+                isStart = true;
+              }
+            } else {
+              SerialPortTools.writeBytes(COM1, Commands.START);
+              com1HasData = false;
+              isStart = true;
+            }
+>>>>>>> 92e0dc55d8e6327ddf2f99b92ff8a058c1f0eee3
           } else {
             SerialPortTools.writeBytes(COM1, Commands.RESTART);
             JOptionPane.showMessageDialog(null, "产品未扫描，请进行扫描或手动输入编号后重试！");
@@ -1396,6 +1451,7 @@ public class DataView extends LoyerFrame {
             posiHasModify = false;
             initCoordinate();
           }
+<<<<<<< HEAD
           //此处进行电流测试
           SerialPortTools.writeString(COM5, "GBK", "MEAS1?");
           com1HasData = false;
@@ -1408,6 +1464,19 @@ public class DataView extends LoyerFrame {
         } else if(isEquals(com1Bytes[14], "88")) { //超时
           allowPullRecord = false;
           com1HasData = false;
+=======
+          allowStep[0] = true;
+          com1HasData = false;
+        } else if (isEquals(com1Bytes[14], "4c")) { // 到达指定位置
+          com2HasData = false;
+          com1HasData = false;
+          allowPullRecord = true;
+          //timeout = 0;
+          //logBySelf("到达指定位置");
+        } else if(isEquals(com1Bytes[14], "88")) { //超时
+          allowPullRecord = false;
+          com1HasData = false;
+>>>>>>> 92e0dc55d8e6327ddf2f99b92ff8a058c1f0eee3
           table.setValueAt("fail", stepCounter * 3 + 1, 5);
           table.setValueAt("NG", stepCounter * 3 + 1, 7);
           record(stepCounter * 3 + 1,  "导通");
